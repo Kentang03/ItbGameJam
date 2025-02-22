@@ -1,0 +1,175 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6551794624274716154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Plugins/FMODBanks/GamejamITB/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638758619821099119
+  FileSizes:
+  - Name: 
+    Value: 880
+  Exists: 1
+--- !u!114 &-5044051837700041204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Jump
+  m_EditorClassIdentifier: 
+  Path: event:/Jump
+  Guid:
+    Data1: 1431271756
+    Data2: 1294609241
+    Data3: -1286406731
+    Data4: -198303048
+  Banks:
+  - {fileID: 6344398120924939515}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 437
+--- !u!114 &-3629785952117093455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Step_SFX
+  m_EditorClassIdentifier: 
+  Path: event:/Step_SFX
+  Guid:
+    Data1: 308339592
+    Data2: 1091455009
+    Data3: -1570307940
+    Data4: 23737503
+  Banks:
+  - {fileID: 6344398120924939515}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
+--- !u!114 &-801637233600063496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Party
+  m_EditorClassIdentifier: 
+  Path: event:/Party
+  Guid:
+    Data1: -1722261331
+    Data2: 1277223902
+    Data3: 561187756
+    Data4: 471724643
+  Banks:
+  - {fileID: 6344398120924939515}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 45932
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: -6551794624274716154}
+  - {fileID: 6344398120924939515}
+  EditorEvents:
+  - {fileID: -801637233600063496}
+  - {fileID: -5044051837700041204}
+  - {fileID: 3782989279690650509}
+  - {fileID: -3629785952117093455}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: 6344398120924939515}
+  StringsBanks:
+  - {fileID: -6551794624274716154}
+  cacheTime: 638758619821099119
+  cacheVersion: 131623
+--- !u!114 &3782989279690650509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Hurt_SFX
+  m_EditorClassIdentifier: 
+  Path: event:/Hurt_SFX
+  Guid:
+    Data1: 1128630353
+    Data2: 1165760408
+    Data3: 1247507082
+    Data4: -914261965
+  Banks:
+  - {fileID: 6344398120924939515}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 491
+--- !u!114 &6344398120924939515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/GamejamITB/Build/Desktop/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Plugins/FMODBanks/GamejamITB/Build/Desktop/Master.bank
+  Name: GamejamITB/Build/Desktop/Master
+  StudioPath: bank:/Master
+  lastModified: 638758619821088982
+  FileSizes: []
+  Exists: 1
