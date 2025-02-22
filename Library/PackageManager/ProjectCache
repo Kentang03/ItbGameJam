@@ -700,6 +700,7 @@ m_ResolvedPackages:
     - 1.11.2
     - 1.12.0
     - 1.13.0
+    - 1.13.1
     compatible:
     - 1.7.0
     - 1.8.0-pre.1
@@ -714,6 +715,7 @@ m_ResolvedPackages:
     - 1.11.2
     - 1.12.0
     - 1.13.0
+    - 1.13.1
     recommended: 1.7.0
     deprecated: []
   dependencies:
