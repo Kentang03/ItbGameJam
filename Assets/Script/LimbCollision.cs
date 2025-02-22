@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LimbCollision : MonoBehaviour
@@ -9,7 +7,7 @@ public class LimbCollision : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        controller = GameObject.FindObjectOfType<PlayerController>().GetComponent<PlayerController>();
+        /*controller = GameObject.FindObjectOfType<PlayerController>().GetComponent<PlayerController>();*/
     }
 
     private void OnCollisionEnter(Collision collision)

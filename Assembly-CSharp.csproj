@@ -68,6 +68,7 @@
     <Compile Include="Assets\Script\WindZone.cs" />
     <Compile Include="Assets\Script\CopyMotion.cs" />
     <Compile Include="Assets\Script\TestingScript\Player.cs" />
+    <Compile Include="Assets\Script\CameraController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
