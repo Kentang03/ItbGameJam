@@ -1,69 +1,103 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
-    public float strafeSpeed;
-    public float jumpForce;
+    public float speed = 5f;
+    public float strafeSpeed = 3f;
+    public float jumpForce = 10f;
+    public float rotationSpeed = 100f; // Sensitivitas rotasi
 
     public Rigidbody hips;
     public bool isGrounded;
 
     public Animator anim;
 
+    private Vector2 movementInput;
+    private bool isSprinting;
+    private bool isJumping;
+
+    public ConfigurableJoint hipJoint;
+    public ConfigurableJoint stomachJoin;
+    public float stomachOffset;
+
+    private float xRotation = 0f; // Menyimpan nilai rotasi vertikal
 
     private void Start()
     {
         hips = GetComponent<Rigidbody>();
     }
+
+    // Input System Callbacks
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        movementInput = context.ReadValue<Vector2>();
+    }
+
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            isSprinting = true;
+        else if (context.canceled)
+            isSprinting = false;
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.performed && isGrounded)
+        {
+            isJumping = true;
+        }
+    }
+
     private void FixedUpdate()
     {
-        if(hips == null) return;
-        if(Input.GetKey(KeyCode.W))
-        {
-            if(Input.GetKey (KeyCode.LeftShift))
-            {
-                hips.AddForce(hips.transform.forward * speed * 1.5f);
-                anim.SetBool("IsWalk", true);
-            }
-            else
-            {
-                hips.AddForce(hips.transform.forward * speed);
-                anim.SetBool("IsWalk", true);
-                anim.speed = 1;
-            }
+        if (hips == null) return;
 
-            
+        // Movement
+        Vector3 moveDirection = new Vector3(movementInput.x, 0, movementInput.y).normalized;
+        float currentSpeed = isSprinting ? speed * 1.5f : speed;
+        hips.AddForce(moveDirection * currentSpeed);
+
+        // Animation
+        if (movementInput.magnitude > 0)
+        {
+            anim.SetBool("IsWalk", true);
+            anim.speed = isSprinting ? 1.5f : 1f;
         }
         else
         {
             anim.SetBool("IsWalk", false);
         }
 
-        if(Input.GetKey(KeyCode.A))
+        // Jump
+        if (isJumping)
         {
-            hips.AddForce(-hips.transform.right * speed);
+            hips.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+            isGrounded = false;
+            isJumping = false;
         }
+    }
 
-        if (Input.GetKey(KeyCode.D))
+    private void Update()
+    {
+        // Rotasi karakter mengikuti arah pergerakan
+        if (movementInput.magnitude > 0)
         {
-            hips.AddForce(hips.transform.right * speed);
+            // Dapatkan rotasi berdasarkan input
+            float targetRotation = Mathf.Atan2(movementInput.x, movementInput.y) * Mathf.Rad2Deg;
+            hipJoint.targetRotation = Quaternion.Euler(0, -targetRotation, 0); // Rotasi horizontal
+
+            // Terapkan rotasi pada stomachJoin (bagian tubuh)
+            stomachJoin.targetRotation = Quaternion.Euler(-xRotation + stomachOffset, 0f, 0f);
         }
+    }
 
-        if (Input.GetKey(KeyCode.S))
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            hips.AddForce(-hips.transform.forward * speed);
-        }
-
-        if(Input.GetAxis("Jump") > 0)
-        {
-            if(isGrounded)
-            {
-                hips.AddForce(new Vector3(0, jumpForce, 0));
-                isGrounded = false;
-            }
+            isGrounded = true;
         }
     }
 }
