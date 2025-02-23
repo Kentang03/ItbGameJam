@@ -1,6 +1,6 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     // Method untuk mengubah state
@@ -120,6 +120,8 @@ public class GameManager : MonoBehaviour
     // Method untuk mengubah kecepatan player
     private void SetSpeed(float newSpeed)
     {
+        player1Rigidbody.GetComponent<PlayerController>().speed = newSpeed;
+        player2Rigidbody.GetComponent<PlayerController>().speed = newSpeed;
 
     }
 
@@ -141,6 +143,8 @@ public class GameManager : MonoBehaviour
         SetSpeed(defaultSpeed);
         windPrefabs.SetActive(false);
         Physics.gravity = defaultGravity;
+        player1Rigidbody.GetComponent<PlayerController>().speed = defaultSpeed;
+        player2Rigidbody.GetComponent<PlayerController>().speed = defaultSpeed;
 
     }
 }

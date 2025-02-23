@@ -5141,6 +5141,11 @@ PrefabInstance:
       objectReference: {fileID: 86402830}
     - target: {fileID: 6818558840461079910, guid: e31eba38cbec8b94b841bf2e0cdb3144,
         type: 3}
+      propertyPath: defaultSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6818558840461079910, guid: e31eba38cbec8b94b841bf2e0cdb3144,
+        type: 3}
       propertyPath: player1Rigidbody
       value: 
       objectReference: {fileID: 1345537325}
@@ -5152,7 +5157,7 @@ PrefabInstance:
     - target: {fileID: 6818558840461079910, guid: e31eba38cbec8b94b841bf2e0cdb3144,
         type: 3}
       propertyPath: availableStates.Array.size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6818558840461079910, guid: e31eba38cbec8b94b841bf2e0cdb3144,
         type: 3}
@@ -5162,12 +5167,12 @@ PrefabInstance:
     - target: {fileID: 6818558840461079910, guid: e31eba38cbec8b94b841bf2e0cdb3144,
         type: 3}
       propertyPath: availableStates.Array.data[4]
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6818558840461079910, guid: e31eba38cbec8b94b841bf2e0cdb3144,
         type: 3}
       propertyPath: availableStates.Array.data[5]
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6945445778774717164, guid: e31eba38cbec8b94b841bf2e0cdb3144,
         type: 3}
@@ -5523,7 +5528,7 @@ PrefabInstance:
     - target: {fileID: 5398310366551702785, guid: c93b09c1f67795148a52a5e6e4fdcee2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6088664980401439657, guid: c93b09c1f67795148a52a5e6e4fdcee2,
         type: 3}

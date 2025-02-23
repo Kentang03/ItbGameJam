@@ -20,12 +20,17 @@ public class PlayerController : MonoBehaviour
     public ConfigurableJoint hipJoint;
     public ConfigurableJoint stomachJoin;
     public float stomachOffset;
-
+    public PlayerInput playerInput;
     private float xRotation = 0f; // Menyimpan nilai rotasi vertikal
 
     private void Start()
     {
         hips = GetComponent<Rigidbody>();
+        playerInput = GetComponent<PlayerInput>();
+        if (Gamepad.all.Count >= playerInput.playerIndex + 1)
+        {
+            playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.all[playerInput.playerIndex]);
+        }
     }
 
     // Input System Callbacks
@@ -59,28 +64,39 @@ public class PlayerController : MonoBehaviour
         float currentSpeed = isSprinting ? speed * 1.5f : speed;
         hips.AddForce(moveDirection * currentSpeed);
 
-        // Animation
-        if (movementInput.magnitude > 0)
-        {
-            anim.SetBool("IsWalk", true);
-            anim.speed = isSprinting ? 1.5f : 1f;
-        }
-        else
-        {
-            anim.SetBool("IsWalk", false);
-        }
-
-        // Jump
         if (isJumping)
         {
             hips.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
             isGrounded = false;
             isJumping = false;
         }
+
+        if (anim == null) return;
+        // Animation
+        if (movementInput.magnitude > 0)
+        {
+            anim.SetBool("IsWalk", true);
+            anim.speed = isSprinting ? 1.5f : 1f;
+
+        }
+        else
+        {
+            if (anim == null) return;
+
+            anim.SetBool("IsWalk", false);
+        }
+
+        // Jump
+
     }
 
     private void Update()
     {
+
+        if (playerInput.devices.Count > 0)
+        {
+            Debug.Log($"{playerInput.gameObject.name} controlled by {playerInput.devices[0].displayName}");
+        }
         // Rotasi karakter mengikuti arah pergerakan
         if (movementInput.magnitude > 0)
         {
@@ -100,4 +116,8 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
         }
     }
+
+
+
+
 }
