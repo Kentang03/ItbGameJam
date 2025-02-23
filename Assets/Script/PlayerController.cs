@@ -113,6 +113,19 @@ public class PlayerController : MonoBehaviour
         {
             GameOver();
         }
+
+        if (isGrounded)
+        {
+            anim.SetBool("IsJump", false);
+
+        }
+        else
+        {
+            anim.SetBool("IsJump", true);
+            /*anim.SetBool("IsWalk", false);*/
+
+
+        }
         // Rotasi karakter mengikuti arah pergerakan
         if (movementInput.magnitude > 0)
         {
@@ -125,13 +138,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
-    }
+
 
     void GameOver()
     {

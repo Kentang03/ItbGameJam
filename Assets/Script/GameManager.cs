@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
     public static GameManager Instance { get; set; }
+
     // Enum untuk menyimpan semua rules state yang mungkin
     public enum RulesState
     {
@@ -47,12 +48,23 @@ public class GameManager : MonoBehaviour
 
     public GameObject windPrefabs;
 
+    public GameObject collider;
+
+    public TextMeshProUGUI timeText;
+
+    public bool isStart = false;
+    private bool isCountdownRunning = false;
+
+    // Variabel untuk countdown
+    private int countdownTime = 5; // Waktu countdown dalam detik
+
+    private Coroutine stateChangeCoroutine; // Simpan referensi coroutine
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-
         }
         else
         {
@@ -64,14 +76,19 @@ public class GameManager : MonoBehaviour
     {
         // Simpan nilai default gravitasi dan kecepatan
         defaultGravity = Physics.gravity;
-        StartCoroutine(ChangeStatePeriodically());
+
         // Set state awal
         SetState(RulesState.Normal);
     }
 
     void Update()
     {
-
+        // Mulai countdown jika jumlah pemain >= 2 dan countdown belum berjalan
+        if (player.Count >= 2 && !isCountdownRunning)
+        {
+            StartCoroutine(StartCountdown());
+            isCountdownRunning = true;
+        }
     }
 
     // Method untuk mengubah state
@@ -96,30 +113,39 @@ public class GameManager : MonoBehaviour
             case RulesState.Normal:
                 SetNormalState();
                 Debug.Log("State: Normal");
+                timeText.text = "Normal";
                 break;
 
             case RulesState.GravityLow:
                 SetGravity(defaultGravity * 0.2f); // Gravitasinya setengah dari normal
                 Debug.Log("State: Gravity Low");
+                timeText.text = "Low Gravity";
+
                 break;
 
             case RulesState.GravityHigh:
                 SetGravity(defaultGravity * 3f); // Gravitasinya dua kali lipat dari normal
                 Debug.Log("State: Gravity High");
+                timeText.text = "High Gravity";
+
                 break;
 
             case RulesState.SpeedBoost:
                 SetSpeed(defaultSpeed * 2f); // Kecepatan dua kali lipat dari normal
                 Debug.Log("State: Speed Boost");
+                timeText.text = "Speed Boost";
+
                 break;
 
             case RulesState.SpeedReduction:
                 SetSpeed(defaultSpeed * 0.5f); // Kecepatan setengah dari normal
                 Debug.Log("State: Speed Reduction");
+                timeText.text = "Speed Reduction";
+
                 break;
 
             case RulesState.Wind:
-                /*Instantiate(windPrefabs, windPrefabs.transform.position ,Quaternion.identity);*/
+                timeText.text = "Wind";
                 windPrefabs.SetActive(true);
                 break;
 
@@ -138,23 +164,26 @@ public class GameManager : MonoBehaviour
     // Method untuk mengubah kecepatan player
     private void SetSpeed(float newSpeed)
     {
+        if (player1Rigidbody == null) return;
+
         player1Rigidbody.GetComponent<PlayerController>().speed = newSpeed;
         player2Rigidbody.GetComponent<PlayerController>().speed = newSpeed;
-
     }
 
     public float stateChangeInterval = 10f; // Interval perubahan state
 
     IEnumerator ChangeStatePeriodically()
     {
-        while (true)
+        while (isStart)
         {
             yield return new WaitForSeconds(stateChangeInterval);
+            Debug.Log("Switch State");
             SetNormalState();
             RandomizeState();
         }
     }
 
+    // Method untuk mengatur state normal
     public void SetNormalState()
     {
         SetGravity(defaultGravity);
@@ -163,6 +192,39 @@ public class GameManager : MonoBehaviour
         Physics.gravity = defaultGravity;
         player1Rigidbody.GetComponent<PlayerController>().speed = defaultSpeed;
         player2Rigidbody.GetComponent<PlayerController>().speed = defaultSpeed;
+    }
 
+    // Coroutine untuk countdown
+    IEnumerator StartCountdown()
+    {
+        while (countdownTime > 0)
+        {
+            timeText.text = countdownTime.ToString(); // Update UI
+            yield return new WaitForSeconds(1); // Tunggu 1 detik
+            countdownTime--; // Kurangi waktu countdown
+        }
+
+        if (!isStart)
+        {
+            timeText.text = "GO!";
+            yield return new WaitForSeconds(1); // Tampilkan "GO!" selama 1 detik
+            timeText.text = ""; // Hapus teks
+            Destroy(collider);
+            isStart = true;
+
+            player1Rigidbody = player[0];
+            player2Rigidbody = player[1];
+
+            // Hentikan coroutine yang sedang berjalan (jika ada)
+            if (stateChangeCoroutine != null)
+            {
+                StopCoroutine(stateChangeCoroutine);
+            }
+
+            // Mulai coroutine ChangeStatePeriodically
+            stateChangeCoroutine = StartCoroutine(ChangeStatePeriodically());
+
+            isCountdownRunning = false; // Reset status countdown
+        }
     }
 }

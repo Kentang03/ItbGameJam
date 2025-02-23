@@ -436,3 +436,4 @@ MonoBehaviour:
   player2Camera: {fileID: 0}
   targetCamera: {fileID: 5685171986818911894}
   targetVirtualCamera: {fileID: 2221217126686673615}
+  targetGroup: {fileID: 0}

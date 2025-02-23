@@ -48,5 +48,12 @@ MonoBehaviour:
   availableStates: 0000000001000000020000000300000004000000
   player1Rigidbody: {fileID: 0}
   player2Rigidbody: {fileID: 0}
+  player: []
+  cameraController: []
+  spawnPoint: {fileID: 0}
   defaultSpeed: 0
+  windPrefabs: {fileID: 0}
+  collider: {fileID: 0}
+  timeText: {fileID: 0}
+  isStart: 0
   stateChangeInterval: 5

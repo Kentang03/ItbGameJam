@@ -12,6 +12,7 @@ public class LimbCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.layer == 3) return;
         controller.isGrounded = true;
     }
 
