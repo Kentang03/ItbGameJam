@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/LevelTesting_hanip.unity
+    path: Assets/Scenes/SampleScene/LevelTesting_hanip.unity
     guid: 86caaa28b34bbb745a4e4902d863aac6
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
