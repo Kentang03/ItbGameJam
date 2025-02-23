@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
+    public static GameManager Instance { get; set; }
     // Enum untuk menyimpan semua rules state yang mungkin
     public enum RulesState
     {
@@ -34,13 +36,29 @@ public class GameManager : MonoBehaviour
     public GameObject player1Rigidbody;
     public GameObject player2Rigidbody;
 
+    public List<GameObject> player;
+    public List<Camera> cameraController;
+
     // Nilai gravitasi default
     private Vector3 defaultGravity;
-
+    public Transform spawnPoint;
     // Nilai kecepatan default
     public float defaultSpeed;
 
     public GameObject windPrefabs;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {

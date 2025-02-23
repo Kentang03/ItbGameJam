@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 10f;
     public float rotationSpeed = 100f; // Sensitivitas rotasi
 
-    public Rigidbody hips;
+    private Rigidbody hips;
     public bool isGrounded;
 
     public Animator anim;
@@ -16,21 +17,37 @@ public class PlayerController : MonoBehaviour
     private Vector2 movementInput;
     private bool isSprinting;
     private bool isJumping;
-
+    public CinemachineVirtualCamera virtualCamera;
     public ConfigurableJoint hipJoint;
     public ConfigurableJoint stomachJoin;
     public float stomachOffset;
-    public PlayerInput playerInput;
+    private PlayerInput playerInput;
     private float xRotation = 0f; // Menyimpan nilai rotasi vertikal
 
     private void Start()
     {
-        hips = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
-        if (Gamepad.all.Count >= playerInput.playerIndex + 1)
+        GameManager.Instance.player.Add(this.gameObject);
+        if (GameManager.Instance.player.Count == 1)
         {
-            playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.all[playerInput.playerIndex]);
+            int layer = LayerMask.NameToLayer("Player1Layer");
+            int layerRemove = LayerMask.NameToLayer("Player2Layer");
+            virtualCamera.gameObject.layer = layer;
+            playerInput.camera.cullingMask &= ~(1 << layerRemove);
         }
+        else
+        {
+            int layer = LayerMask.NameToLayer("Player2Layer");
+            int layerRemove = LayerMask.NameToLayer("Player1Layer");
+            virtualCamera.gameObject.layer = layer;
+            playerInput.camera.cullingMask &= ~(1 << layerRemove);
+        }
+
+        hips = GetComponent<Rigidbody>();
+        hipJoint = GetComponent<ConfigurableJoint>();
+
+        GameManager.Instance.cameraController.Add(playerInput.camera);
+
     }
 
     // Input System Callbacks
@@ -92,10 +109,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-
-        if (playerInput.devices.Count > 0)
+        if (transform.position.y <= -10)
         {
-            Debug.Log($"{playerInput.gameObject.name} controlled by {playerInput.devices[0].displayName}");
+            GameOver();
         }
         // Rotasi karakter mengikuti arah pergerakan
         if (movementInput.magnitude > 0)
@@ -117,7 +133,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    void GameOver()
+    {
+        transform.position = GameManager.Instance.transform.position;
+        transform.rotation = GameManager.Instance.transform.rotation;
+    }
 
 
 }
