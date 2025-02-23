@@ -876,7 +876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 150
   strafeSpeed: 100
-  jumpForce: 100
+  jumpForce: 150
   rotationSpeed: 10
   hips: {fileID: 2382009357779021284}
   isGrounded: 0
