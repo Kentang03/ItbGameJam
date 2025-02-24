@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/LevelTesting_hanip.unity
+    guid: 37cc9eec3fcd9e94e8455dab429fa053
   m_configObjects: {}

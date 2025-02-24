@@ -539,6 +539,7 @@ GameObject:
   - component: {fileID: 4521998699314252442}
   - component: {fileID: 667866938721933315}
   - component: {fileID: 7619135382127951990}
+  - component: {fileID: 8119083815572564955}
   m_Layer: 6
   m_Name: Hips
   m_TagString: Untagged
@@ -796,7 +797,12 @@ MonoBehaviour:
   jumpForce: 150
   rotationSpeed: 10
   isGrounded: 0
+  anchor: {fileID: 2743328032607457748}
   anim: {fileID: 5497846607739515678}
+  isPlayer1: 0
+  movementInput: {x: 0, y: 0}
+  isMoving: 0
+  isJumping: 0
   virtualCamera: {fileID: 7195273617453547317}
   hipJoint: {fileID: 6320471480052423442}
   stomachJoin: {fileID: 1964358573365070967}
@@ -910,6 +916,27 @@ MonoBehaviour:
   m_DefaultActionMap: Player1
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 9142514174738236758}
+--- !u!135 &8119083815572564955
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559229165340053978}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.50000006
+  m_Center: {x: -0.00000011920929, y: 0, z: 0.00000047683716}
 --- !u!1 &592899390567499101
 GameObject:
   m_ObjectHideFlags: 0
@@ -2407,6 +2434,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4988541445011777566}
+  - component: {fileID: 8731604625667577436}
   m_Layer: 0
   m_Name: AnchorPoint (1)
   m_TagString: Untagged
@@ -2429,6 +2457,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3320731118301752807}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8731604625667577436
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2743328032607457748}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 3.509129, z: 1.51}
+  m_Center: {x: -0, y: 0.09043474, z: -0}
 --- !u!1 &3106016282422145211
 GameObject:
   m_ObjectHideFlags: 0
@@ -5339,7 +5388,7 @@ Camera:
   m_Depth: 15
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 503
+    m_Bits: 4599
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

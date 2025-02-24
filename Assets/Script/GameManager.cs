@@ -110,6 +110,11 @@ public class GameManager : MonoBehaviour
             isCountdownRunning = true;
         }
 
+        if(player.Count == 1)
+        {
+            timeText.text = "Wait Other Player To Join";
+        }
+
         if (currentState == RulesState.DontMove)
         {
             CheckCharacterMovement();
@@ -354,5 +359,9 @@ public class GameManager : MonoBehaviour
             // Reset state timer
             stateTimer = stateChangeInterval;
         }
+
+        
     }
+
+
 }

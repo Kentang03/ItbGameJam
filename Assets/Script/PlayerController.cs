@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody hips;
     public bool isGrounded;
-
+    public GameObject anchor;
     public Animator anim;
-
+    public bool isPlayer1;
     public Vector2 movementInput;
     private bool isSprinting;
     [HideInInspector] public bool isMoving;
@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.player.Add(this.gameObject);
         if (GameManager.Instance.player.Count == 1)
         {
+            isPlayer1 = true;
+            anchor.layer = LayerMask.NameToLayer("Player1");
             int layer = LayerMask.NameToLayer("Player1Layer");
             int layerRemove = LayerMask.NameToLayer("Player2Layer");
             virtualCamera.gameObject.layer = layer;
@@ -38,6 +40,9 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            isPlayer1 = false;
+            anchor.layer = LayerMask.NameToLayer("Player2   ");
+
             int layer = LayerMask.NameToLayer("Player2Layer");
             int layerRemove = LayerMask.NameToLayer("Player1Layer");
             virtualCamera.gameObject.layer = layer;
@@ -149,5 +154,24 @@ public class PlayerController : MonoBehaviour
         transform.rotation = GameManager.Instance.spawnPoint.transform.rotation;
     }
 
+
+    /*private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Finish"))
+        {
+
+            Debug.Log("Collide");
+            if (isPlayer1)
+            {
+                GameManager.Instance.timeText.text = "Player 1 Winner";
+
+            }
+            else
+            {
+                GameManager.Instance.timeText.text = "Player 2 Winner";
+
+            }
+        }
+    }*/
 
 }

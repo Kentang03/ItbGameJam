@@ -15,9 +15,9 @@ TagManager:
   - Player1Layer
   - Player2Layer
   - BothCamera
-  - 
-  - 
-  - 
+  - Player1
+  - Player2
+  - Finish
   - 
   - 
   - 
