@@ -4461,6 +4461,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3320731118301752807}
   - component: {fileID: 5497846607739515678}
+  - component: {fileID: 6901843670533995275}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -4488,6 +4489,7 @@ Transform:
   - {fileID: 1774752819825026531}
   - {fileID: 120461446199235055}
   - {fileID: 5226743374326018314}
+  - {fileID: 4124997510841585815}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &5497846607739515678
@@ -4511,6 +4513,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6901843670533995275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5225611467263275586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7067527af925e694f9b045ebfeb8207c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepEvent: event:/Step_SFX
 --- !u!1 &5266551122202999991
 GameObject:
   m_ObjectHideFlags: 0
@@ -4594,6 +4609,51 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5822869585960100444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4124997510841585815}
+  - component: {fileID: 6136041814853410738}
+  m_Layer: 0
+  m_Name: Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4124997510841585815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822869585960100444}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: -3.760189, y: 5.388172, z: 0.49925658}
+  m_LocalScale: {x: 0.7692308, y: 0.7692308, z: 0.7692308}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3320731118301752807}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6136041814853410738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822869585960100444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7067527af925e694f9b045ebfeb8207c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepEvent: event:/Step_SFX
 --- !u!1 &6138348061949260237
 GameObject:
   m_ObjectHideFlags: 0
