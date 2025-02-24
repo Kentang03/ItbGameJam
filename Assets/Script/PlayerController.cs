@@ -14,9 +14,10 @@ public class PlayerController : MonoBehaviour
 
     public Animator anim;
 
-    private Vector2 movementInput;
+    public Vector2 movementInput;
     private bool isSprinting;
-    private bool isJumping;
+    [HideInInspector] public bool isMoving;
+    [HideInInspector] public bool isJumping;
     public CinemachineVirtualCamera virtualCamera;
     public ConfigurableJoint hipJoint;
     public ConfigurableJoint stomachJoin;
@@ -92,14 +93,16 @@ public class PlayerController : MonoBehaviour
         // Animation
         if (movementInput.magnitude > 0)
         {
+            isMoving = true;
             anim.SetBool("IsWalk", true);
             anim.speed = isSprinting ? 1.5f : 1f;
 
         }
         else
         {
+            isMoving = false;
             if (anim == null) return;
-
+            
             anim.SetBool("IsWalk", false);
         }
 
@@ -140,10 +143,10 @@ public class PlayerController : MonoBehaviour
 
 
 
-    void GameOver()
+    public void GameOver()
     {
-        transform.position = GameManager.Instance.transform.position;
-        transform.rotation = GameManager.Instance.transform.rotation;
+        transform.position = GameManager.Instance.spawnPoint.transform.position;
+        transform.rotation = GameManager.Instance.spawnPoint.transform.rotation;
     }
 
 

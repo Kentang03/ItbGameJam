@@ -15,7 +15,9 @@ public class GameManager : MonoBehaviour
         GravityHigh,
         SpeedBoost,
         SpeedReduction,
-        Wind,
+        DontMove,
+        DontJump,
+        StoneRain,
         RandomizeState // State khusus untuk mengacak state lainnya
     }
 
@@ -30,7 +32,9 @@ public class GameManager : MonoBehaviour
         RulesState.GravityHigh,
         RulesState.SpeedBoost,
         RulesState.SpeedReduction,
-        RulesState.Wind
+        RulesState.DontMove,
+        RulesState.DontJump,
+        RulesState.StoneRain
     };
 
     // Referensi ke Rigidbody player
@@ -46,11 +50,10 @@ public class GameManager : MonoBehaviour
     // Nilai kecepatan default
     public float defaultSpeed;
 
-    public GameObject windPrefabs;
-
     public GameObject collider;
 
     public TextMeshProUGUI timeText;
+    public TextMeshProUGUI stateTimerText; // Referensi ke UI Text untuk menampilkan waktu pergantian state
 
     public bool isStart = false;
     private bool isCountdownRunning = false;
@@ -59,6 +62,20 @@ public class GameManager : MonoBehaviour
     private int countdownTime = 5; // Waktu countdown dalam detik
 
     private Coroutine stateChangeCoroutine; // Simpan referensi coroutine
+    private float stateTimer; // Waktu tersisa sebelum pergantian state
+
+    // Prefab batu untuk Stone Rain
+    public GameObject stonePrefab;
+
+    // Batas area map (sesuaikan dengan ukuran map Anda)
+    public Vector2 mapBoundsMin = new Vector2(-10, -10); // Batas minimal (x, z)
+    public Vector2 mapBoundsMax = new Vector2(10, 10);   // Batas maksimal (x, z)
+
+    // Interval spawn batu
+    public float stoneSpawnInterval = 1f;
+
+    // Coroutine untuk Stone Rain
+    private Coroutine stoneRainCoroutine;
 
     private void Awake()
     {
@@ -79,6 +96,9 @@ public class GameManager : MonoBehaviour
 
         // Set state awal
         SetState(RulesState.Normal);
+
+        // Inisialisasi stateTimer
+        stateTimer = stateChangeInterval;
     }
 
     void Update()
@@ -89,6 +109,35 @@ public class GameManager : MonoBehaviour
             StartCoroutine(StartCountdown());
             isCountdownRunning = true;
         }
+
+        if (currentState == RulesState.DontMove)
+        {
+            CheckCharacterMovement();
+        }
+        else if (currentState == RulesState.DontJump)
+        {
+            CheckCharacterJump();
+        }
+
+        // Update state timer jika game sudah mulai
+        if (isStart)
+        {
+            UpdateStateTimer();
+        }
+    }
+
+    // Method untuk mengupdate state timer
+    private void UpdateStateTimer()
+    {
+        stateTimer -= Time.deltaTime; // Kurangi waktu tersisa
+        stateTimerText.text = "" + Mathf.CeilToInt(stateTimer).ToString(); // Tampilkan waktu tersisa
+
+        // Jika waktu habis, reset timer dan acak state
+        if (stateTimer <= 0)
+        {
+            stateTimer = stateChangeInterval; // Reset timer
+            RandomizeState(); // Acak state
+        }
     }
 
     // Method untuk mengubah state
@@ -96,6 +145,7 @@ public class GameManager : MonoBehaviour
     {
         currentState = newState;
         ApplyStateRules();
+        stateTimer = stateChangeInterval; // Reset timer saat state berubah
     }
 
     // Method untuk mengacak state
@@ -120,38 +170,111 @@ public class GameManager : MonoBehaviour
                 SetGravity(defaultGravity * 0.2f); // Gravitasinya setengah dari normal
                 Debug.Log("State: Gravity Low");
                 timeText.text = "Low Gravity";
-
                 break;
 
             case RulesState.GravityHigh:
                 SetGravity(defaultGravity * 3f); // Gravitasinya dua kali lipat dari normal
                 Debug.Log("State: Gravity High");
                 timeText.text = "High Gravity";
-
                 break;
 
             case RulesState.SpeedBoost:
                 SetSpeed(defaultSpeed * 2f); // Kecepatan dua kali lipat dari normal
                 Debug.Log("State: Speed Boost");
                 timeText.text = "Speed Boost";
-
                 break;
 
             case RulesState.SpeedReduction:
                 SetSpeed(defaultSpeed * 0.5f); // Kecepatan setengah dari normal
                 Debug.Log("State: Speed Reduction");
                 timeText.text = "Speed Reduction";
-
                 break;
 
-            case RulesState.Wind:
-                timeText.text = "Wind";
-                windPrefabs.SetActive(true);
+            case RulesState.DontMove:
+                timeText.text = "Dont Move";
+                break;
+
+            case RulesState.DontJump:
+                timeText.text = "Dont Jump";
+                break;
+
+            case RulesState.StoneRain:
+                timeText.text = "Stone Rain";
+                Debug.Log("State: Stone Rain");
+
+                /*// Hentikan coroutine Stone Rain jika sudah berjalan
+                if (stoneRainCoroutine != null)
+                {
+                    StopCoroutine(stoneRainCoroutine);
+                }
+
+                // Mulai Stone Rain
+                stoneRainCoroutine = StartCoroutine(StartStoneRain());*/
                 break;
 
             default:
                 Debug.LogWarning("State tidak dikenal!");
                 break;
+        }
+    }
+
+    // Coroutine untuk Stone Rain
+    IEnumerator StartStoneRain()
+    {
+        while (currentState == RulesState.StoneRain)
+        {
+            SpawnStone();
+            yield return new WaitForSeconds(stoneSpawnInterval);
+        }
+    }
+
+    // Method untuk menginstansiasi batu secara acak
+    private void SpawnStone()
+    {
+        // Tentukan posisi acak di dalam batas map
+        float randomX = Random.Range(mapBoundsMin.x, mapBoundsMax.x);
+        float randomZ = Random.Range(mapBoundsMin.y, mapBoundsMax.y);
+
+        // Posisi spawn batu (y tinggi agar batu jatuh dari atas)
+        Vector3 spawnPosition = new Vector3(randomX, 20f, randomZ);
+
+        // Instansiasi batu
+        Instantiate(stonePrefab, spawnPosition, Quaternion.identity);
+    }
+
+    // Method untuk menghentikan Stone Rain
+    private void StopStoneRain()
+    {
+        if (stoneRainCoroutine != null)
+        {
+            StopCoroutine(stoneRainCoroutine);
+            stoneRainCoroutine = null;
+        }
+    }
+
+    private void CheckCharacterMovement()
+    {
+        if (player1Rigidbody.GetComponent<PlayerController>().isMoving == true)
+        {
+            player1Rigidbody.GetComponent<PlayerController>().GameOver();
+        }
+
+        else if (player2Rigidbody.GetComponent<PlayerController>().isMoving == true)
+        {
+            player2Rigidbody.GetComponent<PlayerController>().GameOver();
+        }
+    }
+
+    private void CheckCharacterJump()
+    {
+        if (player1Rigidbody.GetComponent<PlayerController>().isJumping == true)
+        {
+            player1Rigidbody.GetComponent<PlayerController>().GameOver();
+        }
+
+        else if (player2Rigidbody.GetComponent<PlayerController>().isJumping == true)
+        {
+            player2Rigidbody.GetComponent<PlayerController>().GameOver();
         }
     }
 
@@ -188,10 +311,12 @@ public class GameManager : MonoBehaviour
     {
         SetGravity(defaultGravity);
         SetSpeed(defaultSpeed);
-        windPrefabs.SetActive(false);
         Physics.gravity = defaultGravity;
         player1Rigidbody.GetComponent<PlayerController>().speed = defaultSpeed;
         player2Rigidbody.GetComponent<PlayerController>().speed = defaultSpeed;
+
+        // Hentikan Stone Rain jika sedang berjalan
+        StopStoneRain();
     }
 
     // Coroutine untuk countdown
@@ -225,6 +350,9 @@ public class GameManager : MonoBehaviour
             stateChangeCoroutine = StartCoroutine(ChangeStatePeriodically());
 
             isCountdownRunning = false; // Reset status countdown
+
+            // Reset state timer
+            stateTimer = stateChangeInterval;
         }
     }
 }
