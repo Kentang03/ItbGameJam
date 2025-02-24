@@ -10,6 +10,6 @@ public class checkingwin : MonoBehaviour
         {
             GameManager.Instance.timeText.text = "Player 1 Winner";
             Time.timeScale = 0;
-        }
+        }   
     }
 }
